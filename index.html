@@ -1,0 +1,1967 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SpaceMatch 2.0: Complete Product Requirements Document (PRD)</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .section-divider {
+            border-top: 3px solid #4f46e5;
+            margin: 2rem 0;
+        }
+        
+        .flowchart-box {
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 0.5rem;
+            background: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .process-arrow {
+            font-size: 1.5rem;
+            color: #4f46e5;
+            margin: 0 1rem;
+        }
+        
+        .wireframe-box {
+            border: 2px dashed #9ca3af;
+            background: #f9fafb;
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6b7280;
+        }
+        
+        .algorithm-step {
+            background: #f3f4f6;
+            border-left: 4px solid #10b981;
+            padding: 1rem;
+            margin: 0.5rem 0;
+        }
+        
+        .sprint-timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+        
+        .sprint-timeline::before {
+            content: '';
+            position: absolute;
+            left: 1rem;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #4f46e5;
+        }
+        
+        .sprint-item {
+            position: relative;
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            margin-left: 1rem;
+        }
+        
+        .sprint-item::before {
+            content: '';
+            position: absolute;
+            left: -2rem;
+            top: 1rem;
+            width: 12px;
+            height: 12px;
+            background: #4f46e5;
+            border-radius: 50%;
+        }
+        
+        .api-endpoint {
+            background: #1f2937;
+            color: #10b981;
+            padding: 0.5rem;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            margin: 0.25rem 0;
+        }
+        
+        .database-table {
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+        
+        .db-header {
+            background: #374151;
+            color: white;
+            padding: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .db-field {
+            padding: 0.5rem;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .metric-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            text-align: center;
+            margin: 0.5rem;
+        }
+        
+        .risk-level-high { border-left: 4px solid #ef4444; }
+        .risk-level-medium { border-left: 4px solid #f59e0b; }
+        .risk-level-low { border-left: 4px solid #10b981; }
+        
+        @media print {
+            .no-print { display: none; }
+            body { font-size: 12px; }
+            .section-divider { page-break-before: avoid; }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <div class="gradient-bg text-white p-8 text-center">
+        <h1 class="text-5xl font-bold mb-4">SpaceMatch 2.0</h1>
+        <h2 class="text-2xl font-light mb-2">Complete Product Requirements Document</h2>
+        <p class="text-lg opacity-90">The Ultimate Commercial Real Estate Platform for India</p>
+        <div class="mt-6 flex justify-center space-x-8 text-sm">
+            <div><i class="fas fa-calendar-alt mr-2"></i>Version 1.0</div>
+            <div><i class="fas fa-user mr-2"></i>Product Team</div>
+            <div><i class="fas fa-clock mr-2"></i>90-Day Development Timeline</div>
+        </div>
+    </div>
+
+    <div class="max-w-7xl mx-auto p-6">
+        
+        <!-- Table of Contents -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+            <h2 class="text-2xl font-bold mb-4 text-gray-800"><i class="fas fa-list mr-3"></i>Table of Contents</h2>
+            <div class="grid grid-cols-2 gap-4 text-sm">
+                <div>
+                    <a href="#executive-summary" class="block py-1 text-blue-600 hover:underline">1. Executive Summary</a>
+                    <a href="#product-vision" class="block py-1 text-blue-600 hover:underline">2. Product Vision & Strategy</a>
+                    <a href="#market-analysis" class="block py-1 text-blue-600 hover:underline">3. 3-Segment Market Analysis</a>
+                    <a href="#user-journeys" class="block py-1 text-blue-600 hover:underline">4. User Journey Maps</a>
+                    <a href="#technical-architecture" class="block py-1 text-blue-600 hover:underline">5. Technical Architecture</a>
+                    <a href="#feature-specifications" class="block py-1 text-blue-600 hover:underline">6. Feature Specifications</a>
+                    <a href="#ui-ux-guidelines" class="block py-1 text-blue-600 hover:underline">7. UI/UX Guidelines</a>
+                    <a href="#data-models" class="block py-1 text-blue-600 hover:underline">8. Data Models & APIs</a>
+                </div>
+                <div>
+                    <a href="#transaction-lifecycle" class="block py-1 text-blue-600 hover:underline">9. CRE Transaction Lifecycle</a>
+                    <a href="#agent-incentivization" class="block py-1 text-blue-600 hover:underline">10. Agent Incentivization System</a>
+                    <a href="#crm-workflows" class="block py-1 text-blue-600 hover:underline">11. CRM-Native Workflows</a>
+                    <a href="#document-automation" class="block py-1 text-blue-600 hover:underline">12. Document Automation</a>
+                    <a href="#financial-services" class="block py-1 text-blue-600 hover:underline">13. Financial Services Integration</a>
+                    <a href="#prototype-roadmap" class="block py-1 text-blue-600 hover:underline">14. 90-Day Prototype Roadmap</a>
+                    <a href="#success-metrics" class="block py-1 text-blue-600 hover:underline">15. Success Metrics & KPIs</a>
+                    <a href="#future-roadmap" class="block py-1 text-blue-600 hover:underline">16. Future Roadmap</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- 1. Executive Summary -->
+        <section id="executive-summary" class="bg-white rounded-lg shadow-lg p-6 mb-8">
+            <h2 class="text-3xl font-bold mb-6 text-gray-800"><i class="fas fa-rocket mr-3 text-blue-600"></i>1. Executive Summary</h2>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+                <div class="metric-card">
+                    <div class="text-3xl font-bold">₹135 Cr</div>
+                    <div class="text-lg">Year 3 Revenue Target</div>
+                </div>
+                <div class="metric-card">
+                    <div class="text-3xl font-bold">10,000+</div>
+                    <div class="text-lg">Properties at Launch</div>
+                </div>
+                <div class="metric-card">
+                    <div class="text-3xl font-bold">90 Days</div>
+                    <div class="text-lg">Prototype Timeline</div>
+                </div>
+            </div>
+
+            <div class="prose max-w-none">
+                <h3 class="text-xl font-semibold mb-3">Product Overview</h3>
+                <p class="mb-4">SpaceMatch 2.0 is India's first AI-native commercial real estate platform that solves the critical agent incentivization problem while serving three distinct market segments: Traditional Commercial Spaces, Co-working Solutions, and Independent Offices.</p>
+                
+                <h3 class="text-xl font-semibold mb-3">Key Innovations</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="bg-blue-50 p-4 rounded-lg">
+                        <h4 class="font-semibold text-blue-800">Priority Lead System</h4>
+                        <p class="text-sm text-blue-700">First-to-claim property advantage with AI-qualified leads</p>
+                    </div>
+                    <div class="bg-green-50 p-4 rounded-lg">
+                        <h4 class="font-semibold text-green-800">Multi-Agent AI Architecture</h4>
+                        <p class="text-sm text-green-700">Automated data aggregation and intelligent matching</p>
+                    </div>
+                    <div class="bg-purple-50 p-4 rounded-lg">
+                        <h4 class="font-semibold text-purple-800">CRM-Native Platform</h4>
+                        <p class="text-sm text-purple-700">End-to-end workflow from discovery to closure</p>
+                    </div>
+                    <div class="bg-orange-50 p-4 rounded-lg">
+                        <h4 class="font-semibold text-orange-800">3-Segment Focus</h4>
+                        <p class="text-sm text-orange-700">Complete commercial real estate spectrum coverage</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. Product Vision & Strategy -->
+        <section id="product-vision" class="bg-white rounded-lg shadow-lg p-6 mb-8">
+            <h2 class="text-3xl font-bold mb-6 text-gray-800"><i class="fas fa-eye mr-3 text-blue-600"></i>2. Product Vision & Strategy</h2>
+            
+            <div class="mb-8">
+                <h3 class="text-2xl font-semibold mb-4">Vision Statement</h3>
+                <div class="bg-gradient-to-r from-blue-50 to-purple-50 p-6 rounded-lg border-l-4 border-blue-500">
+                    <p class="text-lg font-medium text-gray-800">"To become the operating system for commercial real estate in India, where every transaction is intelligent, every decision is data-driven, and every stakeholder wins."</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">Strategic Pillars</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <div class="bg-blue-100 p-2 rounded-full mr-4">
+                                <i class="fas fa-brain text-blue-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold">AI-First Approach</h4>
+                                <p class="text-sm text-gray-600">Every feature powered by machine learning and automation</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="bg-green-100 p-2 rounded-full mr-4">
+                                <i class="fas fa-users text-green-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold">Agent-Centric Design</h4>
+                                <p class="text-sm text-gray-600">Solving real problems for real estate professionals</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="bg-purple-100 p-2 rounded-full mr-4">
+                                <i class="fas fa-chart-line text-purple-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold">Network Effects</h4>
+                                <p class="text-sm text-gray-600">Platform becomes more valuable with each new user</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="bg-orange-100 p-2 rounded-full mr-4">
+                                <i class="fas fa-globe text-orange-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold">Global Scalability</h4>
+                                <p class="text-sm text-gray-600">Built for international expansion from day one</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">Competitive Positioning</h3>
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <canvas id="competitiveChart" width="400" height="300"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. 3-Segment Market Analysis -->
+        <section id="market-analysis" class="bg-white rounded-lg shadow-lg p-6 mb-8">
+            <h2 class="text-3xl font-bold mb-6 text-gray-800"><i class="fas fa-chart-pie mr-3 text-blue-600"></i>3. Three-Segment Market Analysis</h2>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+                <!-- Segment 1: Traditional Commercial -->
+                <div class="border-2 border-blue-200 rounded-lg p-6">
+                    <div class="text-center mb-4">
+                        <i class="fas fa-building text-4xl text-blue-600 mb-2"></i>
+                        <h3 class="text-xl font-bold text-blue-800">Traditional Commercial</h3>
+                        <p class="text-sm text-blue-600">Any Industry, Any Space</p>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="flex justify-between">
+                            <span class="text-sm font-medium">Market Share:</span>
+                            <span class="text-sm font-bold">60%</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-sm font-medium">Avg Deal Size:</span>
+                            <span class="text-sm font-bold">₹50L-5Cr</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-sm font-medium">Lease Term:</span>
+                            <span class="text-sm font-bold">3-9 years</span>
+                        </div>
+                        <div class="mt-4">
+                            <h4 class="font-semibold text-sm mb-2">Property Types:</h4>
+                            <ul class="text-xs space-y-1">
+                                <li>• Office Buildings (Class A, B, C)</li>
+                                <li>• Retail Spaces</li>
+                                <li>• Warehouses & Logistics</li>
+                                <li>• Manufacturing Facilities</li>
+                                <li>• Mixed-Use Developments</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Segment 2: Co-working Spaces -->
+                <div class="border-2 border-green-200 rounded-lg p-6">
+                    <div class="text-center mb-4">
+                        <i class="fas fa-laptop text-4xl text-green-600 mb-2"></i>
+                        <h3 class="text-xl font-bold text-green-800">Co-working Spaces</h3>
+                        <p class="text-sm text-green-600">Flexibility Without CapEx</p>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="flex justify-between">
+                            <span class="text-sm font-medium">Market Share:</span>
+                            <span class="text-sm font-bold">25%</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-sm font-medium">Avg Deal Size:</span>
+                            <span class="text-sm font-bold">₹10K-2L/month</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-sm font-medium">Flexibility:</span>
+                            <span class="text-sm font-bold">Month-to-month</span>
+                        </div>
+                        <div class="mt-4">
+                            <h4 class="font-semibold text-sm mb-2">Solutions:</h4>
+                            <ul class="text-xs space-y-1">
+                                <li>• Hot Desks (₹5K-8K/month)</li>
+                                <li>• Dedicated Desks (₹8K-12K/month)</li>
+                                <li>• Private Cabins (₹15K-25K/month)</li>
+                                <li>• Team Spaces (₹20K-40K/month)</li>
+                                <li>• Meeting Rooms (₹500-2K/hour)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Segment 3: Independent Offices -->
+                <div class="border-2 border-purple-200 rounded-lg p-6">
+                    <div class="text-center mb-4">
+                        <i class="fas fa-home text-4xl text-purple-600 mb-2"></i>
+                        <h3 class="text-xl font-bold text-purple-800">Independent Offices</h3>
+                        <p class="text-sm text-purple-600">Long-term Dedicated Spaces</p>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="flex justify-between">
+                            <span class="text-sm font-medium">Market Share:</span>
+                            <span class="text-sm font-bold">15%</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-sm font-medium">Avg Deal Size:</span>
+                            <span class="text-sm font-bold">₹25L-10Cr</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-sm font-medium">Lease Term:</span>
+                            <span class="text-sm font-bold">5-9 years</span>
+                        </div>
+                        <div class="mt-4">
+                            <h4 class="font-semibold text-sm mb-2">Categories:</h4>
+                            <ul class="text-xs space-y-1">
+                                <li>• Small Offices (200-1K sq ft)</li>
+                                <li>• Medium Offices (1K-5K sq ft)</li>
+                                <li>• Large Offices (5K+ sq ft)</li>
+                                <li>• Corporate HQ (10K+ sq ft)</li>
+                                <li>• Custom Build-outs</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Market Size Visualization -->
+            <div class="bg-gray-50 p-6 rounded-lg">
+                <h3 class="text-xl font-semibold mb-4 text-center">NCR Market Opportunity by Segment</h3>
+                <div class="flex justify-center">
+                    <canvas id="marketSizeChart" width="600" height="400"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. User Journey Maps -->
+        <section id="user-journeys" class="bg-white rounded-lg shadow-lg p-6 mb-8">
+            <h2 class="text-3xl font-bold mb-6 text-gray-800"><i class="fas fa-route mr-3 text-blue-600"></i>4. Complete User Journey Maps</h2>
+            
+            <!-- Business User Journey -->
+            <div class="mb-8">
+                <h3 class="text-2xl font-semibold mb-4 text-blue-800">Business User Journey</h3>
+                <div class="bg-blue-50 p-6 rounded-lg">
+                    <div class="flex flex-wrap items-center justify-center">
+                        <div class="flowchart-box bg-blue-100">
+                            <i class="fas fa-search text-blue-600 mb-2"></i>
+                            <div class="font-semibold">Requirement Input</div>
+                            <div class="text-xs text-gray-600">Size, location, budget, amenities</div>
+                        </div>
+                        <i class="fas fa-arrow-right process-arrow"></i>
+                        <div class="flowchart-box bg-blue-100">
+                            <i class="fas fa-robot text-blue-600 mb-2"></i>
+                            <div class="font-semibold">AI Matching</div>
+                            <div class="text-xs text-gray-600">Smart property recommendations</div>
+                        </div>
+                        <i class="fas fa-arrow-right process-arrow"></i>
+                        <div class="flowchart-box bg-blue-100">
+                            <i class="fas fa-heart text-blue-600 mb-2"></i>
+                            <div class="font-semibold">Swipe & Shortlist</div>
+                            <div class="text-xs text-gray-600">Tinder-style property discovery</div>
+                        </div>
+                        <i class="fas fa-arrow-right process-arrow"></i>
+                        <div class="flowchart-box bg-blue-100">
+                            <i class="fas fa-handshake text-blue-600 mb-2"></i>
+                            <div class="font-semibold">Agent Connect</div>
+                            <div class="text-xs text-gray-600">Priority lead routing</div>
+                        </div>
+                        <i class="fas fa-arrow-right process-arrow"></i>
+                        <div class="flowchart-box bg-blue-100">
+                            <i class="fas fa-file-contract text-blue-600 mb-2"></i>
+                            <div class="font-semibold">Deal Closure</div>
+                            <div class="text-xs text-gray-600">Integrated services</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Agent User Journey -->
+            <div class="mb-8">
+                <h3 class="text-2xl font-semibold mb-4 text-green-800">Agent User Journey</h3>
+                <div class="bg-green-50 p-6 rounded-lg">
+                    <div class="flex flex-wrap items-center justify-center">
+                        <div class="flowchart-box bg-green-100">
+                            <i class="fas fa-user-plus text-green-600 mb-2"></i>
+                            <div class="font-semibold">Quick Onboarding</div>
+                            <div class="text-xs text-gray-600">24-hour setup process</div>
+                        </div>
+                        <i class="fas fa-arrow-right process-arrow text-green-600"></i>
+                        <div class="flowchart-box bg-green-100">
+                            <i class="fas fa-claim text-green-600 mb-2"></i>
+                            <div class="font-semibold">Claim Properties</div>
+                            <div class="text-xs text-gray-600">First-come priority system</div>
+                        </div>
+                        <i class="fas fa-arrow-right process-arrow text-green-600"></i>
+                        <div class="flowchart-box bg-green-100">
+                            <i class="fas fa-bell text-green-600 mb-2"></i>
+                            <div class="font-semibold">Qualified Leads</div>
+                            <div class="text-xs text-gray-600">AI-scored prospects</div>
+                        </div>
+                        <i class="fas fa-arrow-right process-arrow text-green-600"></i>
+                        <div class="flowchart-box bg-green-100">
+                            <i class="fas fa-chart-line text-green-600 mb-2"></i>
+                            <div class="font-semibold">CRM Management</div>
+                            <div class="text-xs text-gray-600">Pipeline tracking</div>
+                        </div>
+                        <i class="fas fa-arrow-right process-arrow text-green-600"></i>
+                        <div class="flowchart-box bg-green-100">
+                            <i class="fas fa-money-bill text-green-600 mb-2"></i>
+                            <div class="font-semibold">Commission</div>
+                            <div class="text-xs text-gray-600">Transparent payouts</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Segment-Specific Journeys -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div class="border border-blue-200 rounded-lg p-4">
+                    <h4 class="font-semibold text-blue-800 mb-3">Traditional Commercial Journey</h4>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex items-center"><i class="fas fa-circle text-blue-400 mr-2"></i>Requirement Analysis</div>
+                        <div class="flex items-center"><i class="fas fa-circle text-blue-400 mr-2"></i>Site Visits (Physical)</div>
+                        <div class="flex items-center"><i class="fas fa-circle text-blue-400 mr-2"></i>Due Diligence</div>
+                        <div class="flex items-center"><i class="fas fa-circle text-blue-400 mr-2"></i>Negotiation</div>
+                        <div class="flex items-center"><i class="fas fa-circle text-blue-400 mr-2"></i>Documentation</div>
+                        <div class="flex items-center"><i class="fas fa-circle text-blue-400 mr-2"></i>Registration & Handover</div>
+                    </div>
+                </div>
+                
+                <div class="border border-green-200 rounded-lg p-4">
+                    <h4 class="font-semibold text-green-800 mb-3">Co-working Journey</h4>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex items-center"><i class="fas fa-circle text-green-400 mr-2"></i>Instant Search</div>
+                        <div class="flex items-center"><i class="fas fa-circle text-green-400 mr-2"></i>Virtual Tours</div>
+                        <div class="flex items-center"><i class="fas fa-circle text-green-400 mr-2"></i>Online Booking</div>
+                        <div class="flex items-center"><i class="fas fa-circle text-green-400 mr-2"></i>Payment Processing</div>
+                        <div class="flex items-center"><i class="fas fa-circle text-green-400 mr-2"></i>Access Code Generation</div>
+                        <div class="flex items-center"><i class="fas fa-circle text-green-400 mr-2"></i>Move-in Ready</div>
+                    </div>
+                </div>
+                
+                <div class="border border-purple-200 rounded-lg p-4">
+                    <h4 class="font-semibold text-purple-800 mb-3">Independent Office Journey</h4>
+                    <div class="space-y-2 text-sm">
+                        <div class="flex items-center"><i class="fas fa-circle text-purple-400 mr-2"></i>Executive Consultation</div>
+                        <div class="flex items-center"><i class="fas fa-circle text-purple-400 mr-2"></i>Customization Planning</div>
+                        <div class="flex items-center"><i class="fas fa-circle text-purple-400 mr-2"></i>Financial Structuring</div>
+                        <div class="flex items-center"><i class="fas fa-circle text-purple-400 mr-2"></i>Legal Documentation</div>
+                        <div class="flex items-center"><i class="fas fa-circle text-purple-400 mr-2"></i>Fit-out Coordination</div>
+                        <div class="flex items-center"><i class="fas fa-circle text-purple-400 mr-2"></i>Long-term Management</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. Technical Architecture -->
+        <section id="technical-architecture" class="bg-white rounded-lg shadow-lg p-6 mb-8">
+            <h2 class="text-3xl font-bold mb-6 text-gray-800"><i class="fas fa-cogs mr-3 text-blue-600"></i>5. Technical Architecture</h2>
+            
+            <!-- Multi-Agent AI System -->
+            <div class="mb-8">
+                <h3 class="text-2xl font-semibold mb-4">Multi-Agent AI System Architecture</h3>
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <div class="grid grid-cols-1 lg:grid-cols-5 gap-4">
+                        <div class="bg-blue-100 p-4 rounded-lg text-center">
+                            <i class="fas fa-spider text-blue-600 text-2xl mb-2"></i>
+                            <h4 class="font-semibold text-blue-800">Data Discovery Agent</h4>
+                            <p class="text-xs text-blue-700 mt-2">Scrapes 50+ property sources using Playwright + GPT-4V</p>
+                        </div>
+                        <div class="bg-green-100 p-4 rounded-lg text-center">
+                            <i class="fas fa-shield-alt text-green-600 text-2xl mb-2"></i>
+                            <h4 class="font-semibold text-green-800">Data Validation Agent</h4>
+                            <p class="text-xs text-green-700 mt-2">Cross-references with Google Maps, detects fraud</p>
+                        </div>
+                        <div class="bg-purple-100 p-4 rounded-lg text-center">
+                            <i class="fas fa-chart-bar text-purple-600 text-2xl mb-2"></i>
+                            <h4 class="font-semibold text-purple-800">Market Intelligence Agent</h4>
+                            <p class="text-xs text-purple-700 mt-2">Price trends, demand forecasting, analytics</p>
+                        </div>
+                        <div class="bg-orange-100 p-4 rounded-lg text-center">
+                            <i class="fas fa-heart text-orange-600 text-2xl mb-2"></i>
+                            <h4 class="font-semibold text-orange-800">Matching Agent</h4>
+                            <p class="text-xs text-orange-700 mt-2">AI-powered property-business matching</p>
+                        </div>
+                        <div class="bg-red-100 p-4 rounded-lg text-center">
+                            <i class="fas fa-comments text-red-600 text-2xl mb-2"></i>
+                            <h4 class="font-semibold text-red-800">Communication Agent</h4>
+                            <p class="text-xs text-red-700 mt-2">Automated follow-ups, lead routing</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- System Architecture Diagram -->
+            <div class="mb-8">
+                <h3 class="text-2xl font-semibold mb-4">System Architecture Overview</h3>
+                <div class="bg-white border-2 border-gray-200 rounded-lg p-6">
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <!-- Frontend Layer -->
+                        <div class="text-center">
+                            <h4 class="font-semibold text-lg mb-4 text-blue-800">Frontend Layer</h4>
+                            <div class="space-y-3">
+                                <div class="bg-blue-50 p-3 rounded border">
+                                    <i class="fas fa-mobile-alt text-blue-600 mr-2"></i>Mobile Apps (React Native)
+                                </div>
+                                <div class="bg-blue-50 p-3 rounded border">
+                                    <i class="fas fa-desktop text-blue-600 mr-2"></i>Web App (Next.js)
+                                </div>
+                                <div class="bg-blue-50 p-3 rounded border">
+                                    <i class="fas fa-tablet text-blue-600 mr-2"></i>Agent Dashboard
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Backend Layer -->
+                        <div class="text-center">
+                            <h4 class="font-semibold text-lg mb-4 text-green-800">Backend Layer</h4>
+                            <div class="space-y-3">
+                                <div class="bg-green-50 p-3 rounded border">
+                                    <i class="fas fa-server text-green-600 mr-2"></i>API Gateway (Node.js)
+                                </div>
+                                <div class="bg-green-50 p-3 rounded border">
+                                    <i class="fas fa-robot text-green-600 mr-2"></i>AI Services (Python)
+                                </div>
+                                <div class="bg-green-50 p-3 rounded border">
+                                    <i class="fas fa-cog text-green-600 mr-2"></i>Business Logic (Microservices)
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Data Layer -->
+                        <div class="text-center">
+                            <h4 class="font-semibold text-lg mb-4 text-purple-800">Data Layer</h4>
+                            <div class="space-y-3">
+                                <div class="bg-purple-50 p-3 rounded border">
+                                    <i class="fas fa-database text-purple-600 mr-2"></i>PostgreSQL (Primary)
+                                </div>
+                                <div class="bg-purple-50 p-3 rounded border">
+                                    <i class="fas fa-memory text-purple-600 mr-2"></i>Redis (Cache)
+                                </div>
+                                <div class="bg-purple-50 p-3 rounded border">
+                                    <i class="fas fa-search text-purple-600 mr-2"></i>Elasticsearch (Search)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Technology Stack -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">Core Technology Stack</h3>
+                    <div class="space-y-3">
+                        <div class="api-endpoint">Frontend: Next.js + TypeScript + Tailwind CSS</div>
+                        <div class="api-endpoint">Backend: Node.js + Express + TypeScript</div>
+                        <div class="api-endpoint">Database: PostgreSQL + Redis + Elasticsearch</div>
+                        <div class="api-endpoint">AI/ML: Python + TensorFlow + OpenAI GPT-4</div>
+                        <div class="api-endpoint">Infrastructure: AWS/GCP + Docker + Kubernetes</div>
+                        <div class="api-endpoint">Authentication: Auth0 + JWT</div>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">Development Tools</h3>
+                    <div class="space-y-3">
+                        <div class="api-endpoint">Version Control: Git + GitHub</div>
+                        <div class="api-endpoint">CI/CD: GitHub Actions + Docker</div>
+                        <div class="api-endpoint">Monitoring: Prometheus + Grafana</div>
+                        <div class="api-endpoint">Testing: Jest + Cypress + Pytest</div>
+                        <div class="api-endpoint">Documentation: OpenAPI + Swagger</div>
+                        <div class="api-endpoint">Analytics: Mixpanel + Google Analytics</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. Feature Specifications -->
+        <section id="feature-specifications" class="bg-white rounded-lg shadow-lg p-6 mb-8">
+            <h2 class="text-3xl font-bold mb-6 text-gray-800"><i class="fas fa-list-ul mr-3 text-blue-600"></i>6. Feature Specifications & Algorithms</h2>
+            
+            <!-- Priority Lead System Algorithm -->
+            <div class="mb-8">
+                <h3 class="text-2xl font-semibold mb-4">Priority Lead System Algorithm</h3>
+                <div class="bg-blue-50 p-6 rounded-lg">
+                    <h4 class="font-semibold mb-3">Algorithm Flow:</h4>
+                    <div class="space-y-3">
+                        <div class="algorithm-step">
+                            <strong>Step 1: Property Claiming</strong><br>
+                            <code>IF agent_claims_property THEN property.primary_agent = agent_id</code>
+                        </div>
+                        <div class="algorithm-step">
+                            <strong>Step 2: Lead Scoring</strong><br>
+                            <code>lead_score = (budget_match * 0.3) + (location_preference * 0.25) + (timeline_urgency * 0.25) + (company_size_fit * 0.2)</code>
+                        </div>
+                        <div class="algorithm-step">
+                            <strong>Step 3: Priority Routing</strong><br>
+                            <code>IF lead_score > 75 AND property.primary_agent EXISTS THEN route_to_primary_agent()</code>
+                        </div>
+                        <div class="algorithm-step">
+                            <strong>Step 4: Fallback Logic</strong><br>
+                            <code>IF primary_agent.response_time > 2_hours THEN route_to_secondary_agents()</code>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AI Matching Algorithm -->
+            <div class="mb-8">
+                <h3 class="text-2xl font-semibold mb-4">AI Property Matching Algorithm</h3>
+                <div class="bg-green-50 p-6 rounded-lg">
+                    <h4 class="font-semibold mb-3">Matching Parameters:</h4>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div>
+                            <h5 class="font-semibold mb-2">Business Requirements Vector:</h5>
+                            <ul class="text-sm space-y-1">
+                                <li>• Space Size (sq ft)</li>
+                                <li>• Budget Range (₹/month)</li>
+                                <li>• Location Preferences</li>
+                                <li>• Amenities Required</li>
+                                <li>• Lease Duration</li>
+                                <li>• Industry Type</li>
+                                <li>• Team Size</li>
+                                <li>• Parking Requirements</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h5 class="font-semibold mb-2">Property Features Vector:</h5>
+                            <ul class="text-sm space-y-1">
+                                <li>• Available Space</li>
+                                <li>• Rental Rate</li>
+                                <li>• Geographic Location</li>
+                                <li>• Building Amenities</li>
+                                <li>• Lease Terms Flexibility</li>
+                                <li>• Suitable Industries</li>
+                                <li>• Capacity Limits</li>
+                                <li>• Parking Availability</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <h5 class="font-semibold mb-2">Similarity Calculation:</h5>
+                        <div class="api-endpoint">
+                            similarity_score = cosine_similarity(business_vector, property_vector) * contextual_weights
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Feature Priority Matrix -->
+            <div class="mb-8">
+                <h3 class="text-2xl font-semibold mb-4">Feature Priority Matrix</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full border-collapse border border-gray-300">
+                        <thead>
+                            <tr class="bg-gray-100">
+                                <th class="border border-gray-300 p-3 text-left">Feature</th>
+                                <th class="border border-gray-300 p-3 text-center">Priority</th>
+                                <th class="border border-gray-300 p-3 text-center">Effort</th>
+                                <th class="border border-gray-300 p-3 text-center">Impact</th>
+                                <th class="border border-gray-300 p-3 text-center">Sprint</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="border border-gray-300 p-3">Property Discovery & Search</td>
+                                <td class="border border-gray-300 p-3 text-center"><span class="bg-red-100 text-red-800 px-2 py-1 rounded">P0</span></td>
+                                <td class="border border-gray-300 p-3 text-center">High</td>
+                                <td class="border border-gray-300 p-3 text-center">High</td>
+                                <td class="border border-gray-300 p-3 text-center">1-2</td>
+                            </tr>
+                            <tr>
+                                <td class="border border-gray-300 p-3">Agent Onboarding & Property Claiming</td>
+                                <td class="border border-gray-300 p-3 text-center"><span class="bg-red-100 text-red-800 px-2 py-1 rounded">P0</span></td>
+                                <td class="border border-gray-300 p-3 text-center">Medium</td>
+                                <td class="border border-gray-300 p-3 text-center">High</td>
+                                <td class="border border-gray-300 p-3 text-center">1</td>
+                            </tr>
+                            <tr>
+                                <td class="border border-gray-300 p-3">Lead Management CRM</td>
+                                <td class="border border-gray-300 p-3 text-center"><span class="bg-orange-100 text-orange-800 px-2 py-1 rounded">P1</span></td>
+                                <td class="border border-gray-300 p-3 text-center">High</td>
+                                <td class="border border-gray-300 p-3 text-center">High</td>
+                                <td class="border border-gray-300 p-3 text-center">2-3</td>
+                            </tr>
+                            <tr>
+                                <td class="border border-gray-300 p-3">AI Matching & Recommendations</td>
+                                <td class="border border-gray-300 p-3 text-center"><span class="bg-orange-100 text-orange-800 px-2 py-1 rounded">P1</span></td>
+                                <td class="border border-gray-300 p-3 text-center">High</td>
+                                <td class="border border-gray-300 p-3 text-center">Medium</td>
+                                <td class="border border-gray-300 p-3 text-center">3-4</td>
+                            </tr>
+                            <tr>
+                                <td class="border border-gray-300 p-3">Document Automation</td>
+                                <td class="border border-gray-300 p-3 text-center"><span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded">P2</span></td>
+                                <td class="border border-gray-300 p-3 text-center">Medium</td>
+                                <td class="border border-gray-300 p-3 text-center">Medium</td>
+                                <td class="border border-gray-300 p-3 text-center">5-6</td>
+                            </tr>
+                            <tr>
+                                <td class="border border-gray-300 p-3">Financial Services Integration</td>
+                                <td class="border border-gray-300 p-3 text-center"><span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded">P2</span></td>
+                                <td class="border border-gray-300 p-3 text-center">Medium</td>
+                                <td class="border border-gray-300 p-3 text-center">High</td>
+                                <td class="border border-gray-300 p-3 text-center">6-7</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. UI/UX Guidelines -->
+        <section id="ui-ux-guidelines" class="bg-white rounded-lg shadow-lg p-6 mb-8">
+            <h2 class="text-3xl font-bold mb-6 text-gray-800"><i class="fas fa-paint-brush mr-3 text-blue-600"></i>7. UI/UX Design Guidelines</h2>
+            
+            <!-- Design Principles -->
+            <div class="mb-8">
+                <h3 class="text-2xl font-semibold mb-4">Design Principles</h3>
+                <div class="grid grid-cols-1 lg:grid-cols-4 gap-4">
+                    <div class="text-center p-4 border rounded-lg">
+                        <i class="fas fa-rocket text-blue-600 text-3xl mb-3"></i>
+                        <h4 class="font-semibold">Speed First</h4>
+                        <p class="text-sm text-gray-600">Every action completes in under 3 seconds</p>
+                    </div>
+                    <div class="text-center p-4 border rounded-lg">
+                        <i class="fas fa-mobile-alt text-green-600 text-3xl mb-3"></i>
+                        <h4 class="font-semibold">Mobile Native</h4>
+                        <p class="text-sm text-gray-600">Designed for smartphone-first usage</p>
+                    </div>
+                    <div class="text-center p-4 border rounded-lg">
+                        <i class="fas fa-brain text-purple-600 text-3xl mb-3"></i>
+                        <h4 class="font-semibold">AI Transparent</h4>
+                        <p class="text-sm text-gray-600">Users understand how AI helps them</p>
+                    </div>
+                    <div class="text-center p-4 border rounded-lg">
+                        <i class="fas fa-users text-orange-600 text-3xl mb-3"></i>
+                        <h4 class="font-semibold">Context Aware</h4>
+                        <p class="text-sm text-gray-600">Adapts to user roles and preferences</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Key Screens Wireframes -->
+            <div class="mb-8">
+                <h3 class="text-2xl font-semibold mb-4">Key Screen Wireframes</h3>
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <!-- Business Search Screen -->
+                    <div class="border rounded-lg p-4">
+                        <h4 class="font-semibold mb-3 text-center">Business Search Screen</h4>
+                        <div class="wireframe-box mb-4">
+                            <div class="text-center">
+                                <i class="fas fa-search text-4xl mb-2"></i>
+                                <div>Search Bar</div>
+                                <div class="text-xs">Location, Size, Budget</div>
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <div class="wireframe-box h-16">Filter Options</div>
+                            <div class="wireframe-box h-20">Property Cards</div>
+                            <div class="wireframe-box h-12">Swipe Actions</div>
+                        </div>
+                    </div>
+
+                    <!-- Agent Dashboard -->
+                    <div class="border rounded-lg p-4">
+                        <h4 class="font-semibold mb-3 text-center">Agent Dashboard</h4>
+                        <div class="wireframe-box mb-4">
+                            <div class="text-center">
+                                <i class="fas fa-chart-line text-4xl mb-2"></i>
+                                <div>Performance Metrics</div>
+                                <div class="text-xs">Leads, Conversions, Revenue</div>
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <div class="wireframe-box h-16">Active Leads Pipeline</div>
+                            <div class="wireframe-box h-20">Property Management</div>
+                            <div class="wireframe-box h-12">Quick Actions</div>
+                        </div>
+                    </div>
+
+                    <!-- Property Detail View -->
+                    <div class="border rounded-lg p-4">
+                        <h4 class="font-semibold mb-3 text-center">Property Detail View</h4>
+                        <div class="wireframe-box mb-4">
+                            <div class="text-center">
+                                <i class="fas fa-image text-4xl mb-2"></i>
+                                <div>Image Gallery</div>
+                                <div class="text-xs">360° Photos, Virtual Tour</div>
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <div class="wireframe-box h-16">Property Details</div>
+                            <div class="wireframe-box h-20">AI Insights</div>
+                            <div class="wireframe-box h-12">Contact Agent CTA</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Component Library -->
+            <div class="mb-8">
+                <h3 class="text-2xl font-semibold mb-4">Component Library</h3>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div>
+                        <h4 class="font-semibold mb-3">Primary Components</h4>
+                        <div class="space-y-3">
+                            <div class="bg-blue-50 p-3 rounded border">
+                                <strong>Property Card:</strong> Image, price, location, key features, CTA button
+                            </div>
+                            <div class="bg-green-50 p-3 rounded border">
+                                <strong>Search Bar:</strong> Multi-parameter input with autocomplete
+                            </div>
+                            <div class="bg-purple-50 p-3 rounded border">
+                                <strong>Filter Panel:</strong> Collapsible filters with smart defaults
+                            </div>
+                            <div class="bg-orange-50 p-3 rounded border">
+                                <strong>Lead Card:</strong> Contact info, score, timeline, action buttons
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold mb-3">Interaction Patterns</h4>
+                        <div class="space-y-3">
+                            <div class="bg-blue-50 p-3 rounded border">
+                                <strong>Swipe Actions:</strong> Right (interested), Left (not interested), Up (save)
+                            </div>
+                            <div class="bg-green-50 p-3 rounded border">
+                                <strong>Progressive Disclosure:</strong> Show more details on demand
+                            </div>
+                            <div class="bg-purple-50 p-3 rounded border">
+                                <strong>Smart Notifications:</strong> Contextual, actionable alerts
+                            </div>
+                            <div class="bg-orange-50 p-3 rounded border">
+                                <strong>Bulk Actions:</strong> Select multiple items for batch operations
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 8. Data Models & APIs -->
+        <section id="data-models" class="bg-white rounded-lg shadow-lg p-6 mb-8">
+            <h2 class="text-3xl font-bold mb-6 text-gray-800"><i class="fas fa-database mr-3 text-blue-600"></i>8. Data Models & API Specifications</h2>
+            
+            <!-- Core Data Models -->
+            <div class="mb-8">
+                <h3 class="text-2xl font-semibold mb-4">Core Data Models</h3>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Property Model -->
+                    <div class="database-table">
+                        <div class="db-header">Property Model</div>
+                        <div class="db-field">
+                            <span class="font-mono text-sm">id</span>
+                            <span class="text-gray-600">UUID (Primary Key)</span>
+                        </div>
+                        <div class="db-field">
+                            <span class="font-mono text-sm">title</span>
+                            <span class="text-gray-600">VARCHAR(255)</span>
+                        </div>
+                        <div class="db-field">
+                            <span class="font-mono text-sm">description</span>
+                            <span class="text-gray-600">TEXT</span>
+                        </div>
+                        <div class="db-field">
+                            <span class="font-mono text-sm">location</span>
+                            <span class="text-gray-600">JSONB (coordinates, address)</span>
+                        </div>
+                        <div class="db-field">
+                            <span class="font-mono text-sm">area_sqft</span>
+                            <span class="text-gray-600">INTEGER</span>
+                        </div>
+                        <div class="db-field">
+                            <span class="font-mono text-sm">rent_per_month</span>
+                            <span class="text-gray-600">DECIMAL(10,2)</span>
+                        </div>
+                        <div class="db-field">
+                            <span class="font-mono text-sm">property_type</span>
+                            <span class="text-gray-600">ENUM</span>
+                        </div>
+                        <div class="db-field">
+                            <span class="font-mono text-sm">amenities</span>
+                            <span class="text-gray-600">JSONB</span>
+                        </div>
+                        <div class="db-field">
+                            <span class="font-mono text-sm">claimed_by_agent</span>
+                            <span class="text-gray-600">UUID (Foreign Key)</span>
+                        </div>
+                        <div class="db-field">
+                            <span class="font-mono text-sm">verification_status</span>
+                            <span class="text-gray-600">ENUM</span>
+                        </div>
+                    </div>
+
+                    <!-- User Model -->
+                    <div class="database-table">
+                        <div class="db-header">User Model</div>
+                        <div class="db-field">
+                            <span class="font-mono text-sm">id</span>
+                            <span class="text-gray-600">UUID (Primary Key)</span>
+                        </div>
+                        <div class="db-field">
+                            <span class="font-mono text-sm">email</span>
+                            <span class="text-gray-600">VARCHAR(255) UNIQUE</span>
+                        </div>
+                        <div class="db-field">
+                            <span class="font-mono text-sm">phone</span>
+                            <span class="text-gray-600">VARCHAR(20)</span>
+                        </div>
+                        <div class="db-field">
+                            <span class="font-mono text-sm">role</span>
+                            <span class="text-gray-600">ENUM (business, agent)</span>
+                        </div>
+                        <div class="db-field">
+                            <span class="font-mono text-sm">profile</span>
+                            <span class="text-gray-600">JSONB</span>
+                        </div>
+                        <div class="db-field">
+                            <span class="font-mono text-sm">subscription_tier</span>
+                            <span class="text-gray-600">ENUM</span>
+                        </div>
+                        <div class="db-field">
+                            <span class="font-mono text-sm">preferences</span>
+                            <span class="text-gray-600">JSONB</span>
+                        </div>
+                        <div class="db-field">
+                            <span class="font-mono text-sm">verification_level</span>
+                            <span class="text-gray-600">INTEGER</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- API Endpoints -->
+            <div class="mb-8">
+                <h3 class="text-2xl font-semibold mb-4">Core API Endpoints</h3>
+                <div class="space-y-4">
+                    <div>
+                        <h4 class="font-semibold mb-2">Property APIs</h4>
+                        <div class="space-y-1">
+                            <div class="api-endpoint">GET /api/v1/properties?location={location}&type={type}&budget={budget}</div>
+                            <div class="api-endpoint">POST /api/v1/properties/{id}/claim</div>
+                            <div class="api-endpoint">GET /api/v1/properties/{id}/insights</div>
+                            <div class="api-endpoint">PUT /api/v1/properties/{id}/verification</div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold mb-2">Lead Management APIs</h4>
+                        <div class="space-y-1">
+                            <div class="api-endpoint">POST /api/v1/leads</div>
+                            <div class="api-endpoint">GET /api/v1/leads?agent_id={id}&status={status}</div>
+                            <div class="api-endpoint">PUT /api/v1/leads/{id}/score</div>
+                            <div class="api-endpoint">POST /api/v1/leads/{id}/contact</div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold mb-2">AI Services APIs</h4>
+                        <div class="space-y-1">
+                            <div class="api-endpoint">POST /api/v1/ai/match-properties</div>
+                            <div class="api-endpoint">POST /api/v1/ai/score-lead</div>
+                            <div class="api-endpoint">GET /api/v1/ai/market-insights?location={location}</div>
+                            <div class="api-endpoint">POST /api/v1/ai/generate-description</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Data Flow Diagram -->
+            <div class="mb-8">
+                <h3 class="text-2xl font-semibold mb-4">Data Flow Architecture</h3>
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <div class="flex flex-wrap justify-center items-center">
+                        <div class="flowchart-box bg-blue-100">
+                            <i class="fas fa-mobile-alt text-blue-600 mb-2"></i>
+                            <div class="font-semibold">Mobile/Web Apps</div>
+                        </div>
+                        <i class="fas fa-arrow-right process-arrow"></i>
+                        <div class="flowchart-box bg-green-100">
+                            <i class="fas fa-server text-green-600 mb-2"></i>
+                            <div class="font-semibold">API Gateway</div>
+                        </div>
+                        <i class="fas fa-arrow-right process-arrow"></i>
+                        <div class="flowchart-box bg-purple-100">
+                            <i class="fas fa-cogs text-purple-600 mb-2"></i>
+                            <div class="font-semibold">Business Logic</div>
+                        </div>
+                        <i class="fas fa-arrow-right process-arrow"></i>
+                        <div class="flowchart-box bg-orange-100">
+                            <i class="fas fa-database text-orange-600 mb-2"></i>
+                            <div class="font-semibold">Data Layer</div>
+                        </div>
+                    </div>
+                    <div class="mt-6 flex flex-wrap justify-center items-center">
+                        <div class="flowchart-box bg-red-100">
+                            <i class="fas fa-robot text-red-600 mb-2"></i>
+                            <div class="font-semibold">AI Services</div>
+                        </div>
+                        <i class="fas fa-arrow-up process-arrow transform rotate-90"></i>
+                        <div class="flowchart-box bg-yellow-100">
+                            <i class="fas fa-chart-bar text-yellow-600 mb-2"></i>
+                            <div class="font-semibold">Analytics</div>
+                        </div>
+                        <i class="fas fa-arrow-up process-arrow transform rotate-90"></i>
+                        <div class="flowchart-box bg-indigo-100">
+                            <i class="fas fa-bell text-indigo-600 mb-2"></i>
+                            <div class="font-semibold">Notifications</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 9. CRE Transaction Lifecycle -->
+        <section id="transaction-lifecycle" class="bg-white rounded-lg shadow-lg p-6 mb-8">
+            <h2 class="text-3xl font-bold mb-6 text-gray-800"><i class="fas fa-cycle mr-3 text-blue-600"></i>9. Complete CRE Transaction Lifecycle Integration</h2>
+            
+            <!-- Transaction Phases -->
+            <div class="mb-8">
+                <h3 class="text-2xl font-semibold mb-4">End-to-End Transaction Flow</h3>
+                <div class="bg-gradient-to-r from-blue-50 to-purple-50 p-6 rounded-lg">
+                    <div class="grid grid-cols-1 lg:grid-cols-5 gap-4">
+                        <div class="text-center">
+                            <div class="bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-3">
+                                <i class="fas fa-search text-blue-600 text-xl"></i>
+                            </div>
+                            <h4 class="font-semibold text-blue-800">Discovery</h4>
+                            <p class="text-xs text-blue-700">Property search & matching</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="bg-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-3">
+                                <i class="fas fa-clipboard-check text-green-600 text-xl"></i>
+                            </div>
+                            <h4 class="font-semibold text-green-800">Due Diligence</h4>
+                            <p class="text-xs text-green-700">Document verification</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="bg-purple-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-3">
+                                <i class="fas fa-calculator text-purple-600 text-xl"></i>
+                            </div>
+                            <h4 class="font-semibold text-purple-800">Financial</h4>
+                            <p class="text-xs text-purple-700">Loans & insurance</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="bg-orange-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-3">
+                                <i class="fas fa-file-contract text-orange-600 text-xl"></i>
+                            </div>
+                            <h4 class="font-semibold text-orange-800">Legal</h4>
+                            <p class="text-xs text-orange-700">Documentation & registration</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="bg-red-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-3">
+                                <i class="fas fa-key text-red-600 text-xl"></i>
+                            </div>
+                            <h4 class="font-semibold text-red-800">Handover</h4>
+                            <p class="text-xs text-red-700">Key transfer & move-in</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Document Requirements by Phase -->
+            <div class="mb-8">
+                <h3 class="text-2xl font-semibold mb-4">Required Documents by Phase</h3>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div>
+                        <h4 class="font-semibold mb-3 text-green-800">Legal Verification (15 Documents)</h4>
+                        <div class="bg-green-50 p-4 rounded-lg">
+                            <ul class="text-sm space-y-1">
+                                <li>• Title Deeds (30-year history)</li>
+                                <li>• Encumbrance Certificate</li>
+                                <li>• Mother Deed</li>
+                                <li>• Sale Deed Chain</li>
+                                <li>• Power of Attorney</li>
+                                <li>• Khata Certificate</li>
+                                <li>• Survey Settlement Records</li>
+                                <li>• Building Plan Approval</li>
+                                <li>• Completion Certificate</li>
+                                <li>• Occupancy Certificate</li>
+                                <li>• Fire Safety NOC</li>
+                                <li>• Environmental Clearance</li>
+                                <li>• RERA Registration</li>
+                                <li>• Municipal Approvals</li>
+                                <li>• Utility NOCs</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold mb-3 text-blue-800">Financial Documentation (8 Documents)</h4>
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <ul class="text-sm space-y-1">
+                                <li>• Property Tax Receipts</li>
+                                <li>• Utility Bills (Current)</li>
+                                <li>• Maintenance Receipts</li>
+                                <li>• Insurance Documents</li>
+                                <li>• Loan/Mortgage Status</li>
+                                <li>• Income Proof (Business)</li>
+                                <li>• Bank Statements</li>
+                                <li>• GST Registration</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Integrated Services Platform -->
+            <div class="mb-8">
+                <h3 class="text-2xl font-semibold mb-4">SpaceMatch Integrated Services</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full border-collapse border border-gray-300">
+                        <thead>
+                            <tr class="bg-gray-100">
+                                <th class="border border-gray-300 p-3 text-left">Service</th>
+                                <th class="border border-gray-300 p-3 text-center">Traditional Cost</th>
+                                <th class="border border-gray-300 p-3 text-center">SpaceMatch Cost</th>
+                                <th class="border border-gray-300 p-3 text-center">Time Savings</th>
+                                <th class="border border-gray-300 p-3 text-center">Integration</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="border border-gray-300 p-3">Due Diligence</td>
+                                <td class="border border-gray-300 p-3 text-center">₹50,000</td>
+                                <td class="border border-gray-300 p-3 text-center">₹25,000</td>
+                                <td class="border border-gray-300 p-3 text-center">21 days → 3 days</td>
+                                <td class="border border-gray-300 p-3 text-center">AI Document Processing</td>
+                            </tr>
+                            <tr>
+                                <td class="border border-gray-300 p-3">Legal Documentation</td>
+                                <td class="border border-gray-300 p-3 text-center">₹75,000</td>
+                                <td class="border border-gray-300 p-3 text-center">₹40,000</td>
+                                <td class="border border-gray-300 p-3 text-center">14 days → 2 days</td>
+                                <td class="border border-gray-300 p-3 text-center">Template Automation</td>
+                            </tr>
+                            <tr>
+                                <td class="border border-gray-300 p-3">Loan Processing</td>
+                                <td class="border border-gray-300 p-3 text-center">1% of loan</td>
+                                <td class="border border-gray-300 p-3 text-center">0.5% of loan</td>
+                                <td class="border border-gray-300 p-3 text-center">30 days → 7 days</td>
+                                <td class="border border-gray-300 p-3 text-center">Multi-lender Platform</td>
+                            </tr>
+                            <tr>
+                                <td class="border border-gray-300 p-3">Property Valuation</td>
+                                <td class="border border-gray-300 p-3 text-center">₹25,000</td>
+                                <td class="border border-gray-300 p-3 text-center">₹15,000</td>
+                                <td class="border border-gray-300 p-3 text-center">7 days → 1 day</td>
+                                <td class="border border-gray-300 p-3 text-center">AI-Powered Valuation</td>
+                            </tr>
+                            <tr>
+                                <td class="border border-gray-300 p-3">Insurance</td>
+                                <td class="border border-gray-300 p-3 text-center">15% commission</td>
+                                <td class="border border-gray-300 p-3 text-center">10% commission</td>
+                                <td class="border border-gray-300 p-3 text-center">5 days → 1 day</td>
+                                <td class="border border-gray-300 p-3 text-center">Instant Quotes</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- 10. Agent Incentivization System -->
+        <section id="agent-incentivization" class="bg-white rounded-lg shadow-lg p-6 mb-8">
+            <h2 class="text-3xl font-bold mb-6 text-gray-800"><i class="fas fa-trophy mr-3 text-blue-600"></i>10. Agent Incentivization System</h2>
+            
+            <!-- Priority Lead System -->
+            <div class="mb-8">
+                <h3 class="text-2xl font-semibold mb-4">Priority Lead System Architecture</h3>
+                <div class="bg-gradient-to-r from-green-50 to-blue-50 p-6 rounded-lg">
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <div class="text-center">
+                            <div class="bg-green-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-flag text-green-600 text-2xl"></i>
+                            </div>
+                            <h4 class="font-semibold text-green-800">Property Claiming</h4>
+                            <p class="text-sm text-green-700 mt-2">First agent to claim gets priority on all platform leads for that property</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="bg-blue-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-brain text-blue-600 text-2xl"></i>
+                            </div>
+                            <h4 class="font-semibold text-blue-800">AI Lead Scoring</h4>
+                            <p class="text-sm text-blue-700 mt-2">Machine learning evaluates lead quality before routing to agents</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="bg-purple-100 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-crown text-purple-600 text-2xl"></i>
+                            </div>
+                            <h4 class="font-semibold text-purple-800">Performance Tiers</h4>
+                            <p class="text-sm text-purple-700 mt-2">Top performers get enhanced features and premium lead access</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Agent Tier System -->
+            <div class="mb-8">
+                <h3 class="text-2xl font-semibold mb-4">Performance-Based Tier System</h3>
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <!-- Bronze Tier -->
+                    <div class="border-2 border-orange-200 rounded-lg p-6">
+                        <div class="text-center mb-4">
+                            <i class="fas fa-medal text-4xl text-orange-600 mb-2"></i>
+                            <h3 class="text-xl font-bold text-orange-800">Bronze Agent</h3>
+                            <p class="text-sm text-orange-600">0-2 deals/month</p>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="flex justify-between">
+                                <span class="text-sm font-medium">Lead Priority:</span>
+                                <span class="text-sm font-bold">Standard</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-sm font-medium">Commission:</span>
+                                <span class="text-sm font-bold">Standard Rate</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-sm font-medium">Properties:</span>
+                                <span class="text-sm font-bold">Up to 10</span>
+                            </div>
+                            <div class="mt-4">
+                                <h4 class="font-semibold text-sm mb-2">Features:</h4>
+                                <ul class="text-xs space-y-1">
+                                    <li>• Basic CRM access</li>
+                                    <li>• Standard lead routing</li>
+                                    <li>• Basic analytics</li>
+                                    <li>• Email support</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Silver Tier -->
+                    <div class="border-2 border-gray-300 rounded-lg p-6">
+                        <div class="text-center mb-4">
+                            <i class="fas fa-medal text-4xl text-gray-500 mb-2"></i>
+                            <h3 class="text-xl font-bold text-gray-700">Silver Agent</h3>
+                            <p class="text-sm text-gray-600">3-5 deals/month</p>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="flex justify-between">
+                                <span class="text-sm font-medium">Lead Priority:</span>
+                                <span class="text-sm font-bold">Enhanced</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-sm font-medium">Commission:</span>
+                                <span class="text-sm font-bold">+10% Bonus</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-sm font-medium">Properties:</span>
+                                <span class="text-sm font-bold">Up to 25</span>
+                            </div>
+                            <div class="mt-4">
+                                <h4 class="font-semibold text-sm mb-2">Features:</h4>
+                                <ul class="text-xs space-y-1">
+                                    <li>• Advanced CRM features</li>
+                                    <li>• Priority lead routing</li>
+                                    <li>• Market insights</li>
+                                    <li>• Phone support</li>
+                                    <li>• Lead scoring access</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Gold Tier -->
+                    <div class="border-2 border-yellow-300 rounded-lg p-6">
+                        <div class="text-center mb-4">
+                            <i class="fas fa-medal text-4xl text-yellow-500 mb-2"></i>
+                            <h3 class="text-xl font-bold text-yellow-700">Gold Agent</h3>
+                            <p class="text-sm text-yellow-600">6+ deals/month</p>
+                        </div>
+                        <div class="space-y-3">
+                            <div class="flex justify-between">
+                                <span class="text-sm font-medium">Lead Priority:</span>
+                                <span class="text-sm font-bold">Premium</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-sm font-medium">Commission:</span>
+                                <span class="text-sm font-bold">+25% Bonus</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-sm font-medium">Properties:</span>
+                                <span class="text-sm font-bold">Unlimited</span>
+                            </div>
+                            <div class="mt-4">
+                                <h4 class="font-semibold text-sm mb-2">Features:</h4>
+                                <ul class="text-xs space-y-1">
+                                    <li>• Full platform access</li>
+                                    <li>• First priority on premium leads</li>
+                                    <li>• Advanced analytics & reports</li>
+                                    <li>• Dedicated account manager</li>
+                                    <li>• API access</li>
+                                    <li>• Custom integrations</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Incentive Algorithms -->
+            <div class="mb-8">
+                <h3 class="text-2xl font-semibold mb-4">Lead Routing Algorithm</h3>
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <div class="space-y-4">
+                        <div class="algorithm-step">
+                            <strong>Step 1: Lead Quality Assessment</strong><br>
+                            <code>lead_score = calculate_lead_quality(business_profile, requirement_specificity, budget_verification, timeline_urgency)</code>
+                        </div>
+                        <div class="algorithm-step">
+                            <strong>Step 2: Property Ownership Check</strong><br>
+                            <code>IF property.claimed_agent EXISTS AND lead_score > threshold THEN route_to_primary_agent()</code>
+                        </div>
+                        <div class="algorithm-step">
+                            <strong>Step 3: Agent Performance Factor</strong><br>
+                            <code>priority_multiplier = agent_tier_bonus * recent_performance_score * response_time_factor</code>
+                        </div>
+                        <div class="algorithm-step">
+                            <strong>Step 4: Smart Routing Decision</strong><br>
+                            <code>final_routing = priority_multiplier * lead_score * agent_availability_status</code>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 11. CRM-Native Workflows -->
+        <section id="crm-workflows" class="bg-white rounded-lg shadow-lg p-6 mb-8">
+            <h2 class="text-3xl font-bold mb-6 text-gray-800"><i class="fas fa-workflow mr-3 text-blue-600"></i>11. CRM-Native Workflows</h2>
+            
+            <!-- Lead Management Workflow -->
+            <div class="mb-8">
+                <h3 class="text-2xl font-semibold mb-4">Automated Lead Management Workflow</h3>
+                <div class="bg-blue-50 p-6 rounded-lg">
+                    <div class="grid grid-cols-1 lg:grid-cols-6 gap-4">
+                        <div class="text-center">
+                            <div class="bg-blue-100 p-3 rounded-full mb-3">
+                                <i class="fas fa-user-plus text-blue-600"></i>
+                            </div>
+                            <h4 class="font-semibold text-blue-800">Lead Capture</h4>
+                            <p class="text-xs text-blue-700">Property interest logged</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="bg-green-100 p-3 rounded-full mb-3">
+                                <i class="fas fa-brain text-green-600"></i>
+                            </div>
+                            <h4 class="font-semibold text-green-800">AI Scoring</h4>
+                            <p class="text-xs text-green-700">Quality assessment</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="bg-purple-100 p-3 rounded-full mb-3">
+                                <i class="fas fa-route text-purple-600"></i>
+                            </div>
+                            <h4 class="font-semibold text-purple-800">Smart Routing</h4>
+                            <p class="text-xs text-purple-700">To best agent</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="bg-orange-100 p-3 rounded-full mb-3">
+                                <i class="fas fa-bell text-orange-600"></i>
+                            </div>
+                            <h4 class="font-semibold text-orange-800">Notification</h4>
+                            <p class="text-xs text-orange-700">Instant alert sent</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="bg-red-100 p-3 rounded-full mb-3">
+                                <i class="fas fa-comments text-red-600"></i>
+                            </div>
+                            <h4 class="font-semibold text-red-800">Follow-up</h4>
+                            <p class="text-xs text-red-700">Automated sequences</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="bg-gray-100 p-3 rounded-full mb-3">
+                                <i class="fas fa-chart-line text-gray-600"></i>
+                            </div>
+                            <h4 class="font-semibold text-gray-800">Analytics</h4>
+                            <p class="text-xs text-gray-700">Performance tracking</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CRM Feature Comparison -->
+            <div class="mb-8">
+                <h3 class="text-2xl font-semibold mb-4">SpaceMatch CRM vs Traditional CRMs</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full border-collapse border border-gray-300">
+                        <thead>
+                            <tr class="bg-gray-100">
+                                <th class="border border-gray-300 p-3 text-left">Feature</th>
+                                <th class="border border-gray-300 p-3 text-center">Traditional CRM</th>
+                                <th class="border border-gray-300 p-3 text-center">SpaceMatch CRM</th>
+                                <th class="border border-gray-300 p-3 text-center">Advantage</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="border border-gray-300 p-3">Lead Source</td>
+                                <td class="border border-gray-300 p-3 text-center">Manual import</td>
+                                <td class="border border-gray-300 p-3 text-center">Integrated discovery</td>
+                                <td class="border border-gray-300 p-3 text-center">Zero data entry</td>
+                            </tr>
+                            <tr>
+                                <td class="border border-gray-300 p-3">Lead Quality</td>
+                                <td class="border border-gray-300 p-3 text-center">Manual assessment</td>
+                                <td class="border border-gray-300 p-3 text-center">AI-powered scoring</td>
+                                <td class="border border-gray-300 p-3 text-center">3x better conversion</td>
+                            </tr>
+                            <tr>
+                                <td class="border border-gray-300 p-3">Property Context</td>
+                                <td class="border border-gray-300 p-3 text-center">External lookup</td>
+                                <td class="border border-gray-300 p-3 text-center">Built-in intelligence</td>
+                                <td class="border border-gray-300 p-3 text-center">Instant insights</td>
+                            </tr>
+                            <tr>
+                                <td class="border border-gray-300 p-3">Market Data</td>
+                                <td class="border border-gray-300 p-3 text-center">Separate reports</td>
+                                <td class="border border-gray-300 p-3 text-center">Real-time integration</td>
+                                <td class="border border-gray-300 p-3 text-center">Data-driven decisions</td>
+                            </tr>
+                            <tr>
+                                <td class="border border-gray-300 p-3">Follow-up Sequences</td>
+                                <td class="border border-gray-300 p-3 text-center">Generic templates</td>
+                                <td class="border border-gray-300 p-3 text-center">Context-aware AI</td>
+                                <td class="border border-gray-300 p-3 text-center">Personalized messaging</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Agent Dashboard Features -->
+            <div class="mb-8">
+                <h3 class="text-2xl font-semibold mb-4">Agent Dashboard Key Features</h3>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div>
+                        <h4 class="font-semibold mb-3">Performance Analytics</h4>
+                        <div class="bg-green-50 p-4 rounded-lg">
+                            <ul class="space-y-2 text-sm">
+                                <li class="flex items-center"><i class="fas fa-chart-line text-green-600 mr-2"></i>Lead conversion rates</li>
+                                <li class="flex items-center"><i class="fas fa-clock text-green-600 mr-2"></i>Average response time</li>
+                                <li class="flex items-center"><i class="fas fa-money-bill text-green-600 mr-2"></i>Monthly revenue tracking</li>
+                                <li class="flex items-center"><i class="fas fa-trophy text-green-600 mr-2"></i>Performance benchmarks</li>
+                                <li class="flex items-center"><i class="fas fa-target text-green-600 mr-2"></i>Goal progress indicators</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold mb-3">Pipeline Management</h4>
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <ul class="space-y-2 text-sm">
+                                <li class="flex items-center"><i class="fas fa-funnel-dollar text-blue-600 mr-2"></i>Visual deal pipeline</li>
+                                <li class="flex items-center"><i class="fas fa-calendar text-blue-600 mr-2"></i>Automated follow-up scheduling</li>
+                                <li class="flex items-center"><i class="fas fa-bell text-blue-600 mr-2"></i>Smart reminders and alerts</li>
+                                <li class="flex items-center"><i class="fas fa-chart-pie text-blue-600 mr-2"></i>Deal stage probability</li>
+                                <li class="flex items-center"><i class="fas fa-forecast text-blue-600 mr-2"></i>Revenue forecasting</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 12. Document Automation -->
+        <section id="document-automation" class="bg-white rounded-lg shadow-lg p-6 mb-8">
+            <h2 class="text-3xl font-bold mb-6 text-gray-800"><i class="fas fa-file-alt mr-3 text-blue-600"></i>12. Document Automation & Legal Tech</h2>
+            
+            <!-- AI Document Processing -->
+            <div class="mb-8">
+                <h3 class="text-2xl font-semibold mb-4">AI-Powered Document Processing Pipeline</h3>
+                <div class="bg-gradient-to-r from-purple-50 to-blue-50 p-6 rounded-lg">
+                    <div class="grid grid-cols-1 lg:grid-cols-5 gap-4">
+                        <div class="text-center">
+                            <div class="bg-purple-100 p-3 rounded-full mb-3">
+                                <i class="fas fa-upload text-purple-600"></i>
+                            </div>
+                            <h4 class="font-semibold text-purple-800">Upload</h4>
+                            <p class="text-xs text-purple-700">Drag & drop documents</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="bg-blue-100 p-3 rounded-full mb-3">
+                                <i class="fas fa-eye text-blue-600"></i>
+                            </div>
+                            <h4 class="font-semibold text-blue-800">OCR + AI</h4>
+                            <p class="text-xs text-blue-700">Text extraction & analysis</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="bg-green-100 p-3 rounded-full mb-3">
+                                <i class="fas fa-check-circle text-green-600"></i>
+                            </div>
+                            <h4 class="font-semibold text-green-800">Validation</h4>
+                            <p class="text-xs text-green-700">Cross-reference verification</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="bg-orange-100 p-3 rounded-full mb-3">
+                                <i class="fas fa-exclamation-triangle text-orange-600"></i>
+                            </div>
+                            <h4 class="font-semibold text-orange-800">Risk Scoring</h4>
+                            <p class="text-xs text-orange-700">AI flags potential issues</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="bg-red-100 p-3 rounded-full mb-3">
+                                <i class="fas fa-file-contract text-red-600"></i>
+                            </div>
+                            <h4 class="font-semibold text-red-800">Report</h4>
+                            <p class="text-xs text-red-700">Automated compliance report</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Legal Document Templates -->
+            <div class="mb-8">
+                <h3 class="text-2xl font-semibold mb-4">Smart Legal Document Generation</h3>
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div class="border rounded-lg p-4">
+                        <h4 class="font-semibold mb-3 text-blue-800">Traditional Commercial</h4>
+                        <div class="space-y-2 text-sm">
+                            <div class="bg-blue-50 p-2 rounded">Letter of Intent (LOI)</div>
+                            <div class="bg-blue-50 p-2 rounded">Term Sheet</div>
+                            <div class="bg-blue-50 p-2 rounded">Lease Agreement (5-9 years)</div>
+                            <div class="bg-blue-50 p-2 rounded">Security Deposit Agreement</div>
+                            <div class="bg-blue-50 p-2 rounded">Maintenance Agreement</div>
+                            <div class="bg-blue-50 p-2 rounded">Renewal Options</div>
+                        </div>
+                    </div>
+                    
+                    <div class="border rounded-lg p-4">
+                        <h4 class="font-semibold mb-3 text-green-800">Co-working Spaces</h4>
+                        <div class="space-y-2 text-sm">
+                            <div class="bg-green-50 p-2 rounded">Membership Agreement</div>
+                            <div class="bg-green-50 p-2 rounded">Hot Desk License</div>
+                            <div class="bg-green-50 p-2 rounded">Private Office License</div>
+                            <div class="bg-green-50 p-2 rounded">Meeting Room Terms</div>
+                            <div class="bg-green-50 p-2 rounded">Cancellation Policy</div>
+                            <div class="bg-green-50 p-2 rounded">Community Guidelines</div>
+                        </div>
+                    </div>
+                    
+                    <div class="border rounded-lg p-4">
+                        <h4 class="font-semibold mb-3 text-purple-800">Independent Offices</h4>
+                        <div class="space-y-2 text-sm">
+                            <div class="bg-purple-50 p-2 rounded">Master Lease Agreement</div>
+                            <div class="bg-purple-50 p-2 rounded">Fit-out Specifications</div>
+                            <div class="bg-purple-50 p-2 rounded">Exclusive Use Rights</div>
+                            <div class="bg-purple-50 p-2 rounded">Expansion Options</div>
+                            <div class="bg-purple-50 p-2 rounded">Assignment Rights</div>
+                            <div class="bg-purple-50 p-2 rounded">Termination Clauses</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Document Automation Workflow -->
+            <div class="mb-8">
+                <h3 class="text-2xl font-semibold mb-4">Automated Document Generation Workflow</h3>
+                <div class="bg-gray-50 p-6 rounded-lg">
+                    <div class="space-y-4">
+                        <div class="algorithm-step">
+                            <strong>Step 1: Data Collection</strong><br>
+                            <code>property_data = fetch_property_details(property_id)</code><br>
+                            <code>business_data = fetch_business_profile(user_id)</code>
+                        </div>
+                        <div class="algorithm-step">
+                            <strong>Step 2: Template Selection</strong><br>
+                            <code>template = select_template(property_type, lease_duration, business_size)</code>
+                        </div>
+                        <div class="algorithm-step">
+                            <strong>Step 3: AI Content Generation</strong><br>
+                            <code>clauses = generate_custom_clauses(business_requirements, property_constraints)</code>
+                        </div>
+                        <div class="algorithm-step">
+                            <strong>Step 4: Legal Compliance Check</strong><br>
+                            <code>compliance_status = validate_against_local_laws(document, location)</code>
+                        </div>
+                        <div class="algorithm-step">
+                            <strong>Step 5: Review & Approval</strong><br>
+                            <code>send_for_review(document, stakeholders)</code>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Legal Services Integration -->
+            <div class="mb-8">
+                <h3 class="text-2xl font-semibold mb-4">Integrated Legal Services Marketplace</h3>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div>
+                        <h4 class="font-semibold mb-3">Service Offerings</h4>
+                        <div class="space-y-3">
+                            <div class="bg-blue-50 p-3 rounded border-l-4 border-blue-400">
+                                <strong>Document Review:</strong> ₹15,000 per agreement
+                            </div>
+                            <div class="bg-green-50 p-3 rounded border-l-4 border-green-400">
+                                <strong>Legal Consultation:</strong> ₹5,000 per hour
+                            </div>
+                            <div class="bg-purple-50 p-3 rounded border-l-4 border-purple-400">
+                                <strong>Registration Assistance:</strong> ₹25,000 per transaction
+                            </div>
+                            <div class="bg-orange-50 p-3 rounded border-l-4 border-orange-400">
+                                <strong>Dispute Resolution:</strong> ₹50,000+ per case
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold mb-3">Quality Assurance</h4>
+                        <div class="space-y-3">
+                            <div class="flex items-center">
+                                <i class="fas fa-shield-alt text-blue-600 mr-3"></i>
+                                <span>Verified lawyers only (Bar Council registration)</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-star text-yellow-500 mr-3"></i>
+                                <span>Client rating system (1-5 stars)</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-clock text-green-600 mr-3"></i>
+                                <span>Response time guarantees</span>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-money-bill text-purple-600 mr-3"></i>
+                                <span>Transparent, fixed pricing</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 13. Financial Services Integration -->
+        <section id="financial-services" class="bg-white rounded-lg shadow-lg p-6 mb-8">
+            <h2 class="text-3xl font-bold mb-6 text-gray-800"><i class="fas fa-university mr-3 text-blue-600"></i>13. Financial Services Integration</h2>
+            
+            <!-- Financial Services Ecosystem -->
+            <div class="mb-8">
+                <h3 class="text-2xl font-semibold mb-4">Comprehensive Financial Services Platform</h3>
+                <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+                    <div class="text-center p-4 border rounded-lg">
+                        <i class="fas fa-hand-holding-usd text-blue-600 text-3xl mb-3"></i>
+                        <h4 class="font-semibold text-blue-800">Loan Marketplace</h4>
+                        <p class="text-sm text-blue-700">15+ lenders, instant comparison</p>
+                    </div>
+                    <div class="text-center p-4 border rounded-lg">
+                        <i class="fas fa-shield-alt text-green-600 text-3xl mb-3"></i>
+                        <h4 class="font-semibold text-green-800">Insurance Hub</h4>
+                        <p class="text-sm text-green-700">Property, liability, key person</p>
+                    </div>
+                    <div class="text-center p-4 border rounded-lg">
+                        <i class="fas fa-calculator text-purple-600 text-3xl mb-3"></i>
+                        <h4 class="font-semibold text-purple-800">Financial Planning</h4>
+                        <p class="text-sm text-purple-700">ROI analysis, tax optimization</p>
+                    </div>
+                    <div class="text-center p-4 border rounded-lg">
+                        <i class="fas fa-chart-line text-orange-600 text-3xl mb-3"></i>
+                        <h4 class="font-semibold text-orange-800">Investment Options</h4>
+                        <p class="text-sm text-orange-700">Fractional ownership, REITs</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Loan Partner Network -->
+            <div class="mb-8">
+                <h3 class="text-2xl font-semibold mb-4">Lending Partner Network</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full border-collapse border border-gray-300">
+                        <thead>
+                            <tr class="bg-gray-100">
+                                <th class="border border-gray-300 p-3 text-left">Lender Type</th>
+                                <th class="border border-gray-300 p-3 text-center">Interest Rate Range</th>
+                                <th class="border border-gray-300 p-3 text-center">Max Loan Amount</th>
+                                <th class="border border-gray-300 p-3 text-center">Processing Time</th>
+                                <th class="border border-gray-300 p-3 text-center">SpaceMatch Commission</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="border border-gray-300 p-3">Public Sector Banks</td>
+                                <td class="border border-gray-300 p-3 text-center">8.5% - 11%</td>
+                                <td class="border border-gray-300 p-3 text-center">₹50 Cr</td>
+                                <td class="border border-gray-300 p-3 text-center">30-45 days</td>
+                                <td class="border border-gray-300 p-3 text-center">0.25%</td>
+                            </tr>
+                            <tr>
+                                <td class="border border-gray-300 p-3">Private Banks</td>
+                                <td class="border border-gray-300 p-3 text-center">9% - 12%</td>
+                                <td class="border border-gray-300 p-3 text-center">₹25 Cr</td>
+                                <td class="border border-gray-300 p-3 text-center">15-30 days</td>
+                                <td class="border border-gray-300 p-3 text-center">0.5%</td>
+                            </tr>
+                            <tr>
+                                <td class="border border-gray-300 p-3">NBFCs</td>
+                                <td class="border border-gray-300 p-3 text-center">10% - 15%</td>
+                                <td class="border border-gray-300 p-3 text-center">₹10 Cr</td>
+                                <td class="border border-gray-300 p-3 text-center">7-15 days</td>
+                                <td class="border border-gray-300 p-3 text-center">0.75%</td>
+                            </tr>
+                            <tr>
+                                <td class="border border-gray-300 p-3">Alternative Lenders</td>
+                                <td class="border border-gray-300 p-3 text-center">12% - 18%</td>
+                                <td class="border border-gray-300 p-3 text-center">₹5 Cr</td>
+                                <td class="border border-gray-300 p-3 text-center">3-7 days</td>
+                                <td class="border border-gray-300 p-3 text-center">1%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- AI-Powered Financial Analysis -->
+            <div class="mb-8">
+                <h3 class="text-2xl font-semibold mb-4">AI-Powered Financial Decision Support</h3>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div>
+                        <h4 class="font-semibold mb-3">Loan Eligibility Predictor</h4>
+                        <div class="bg-blue-50 p-4 rounded-lg">
+                            <div class="space-y-3">
+                                <div class="algorithm-step">
+                                    <strong>Credit Score Analysis:</strong><br>
+                                    <code>eligibility_score = (credit_score * 0.3) + (income_stability * 0.25) + (existing_debt_ratio * 0.2) + (property_value * 0.25)</code>
+                                </div>
+                                <div class="text-sm text-blue-800">
+                                    <strong>Input Parameters:</strong>
+                                    <ul class="mt-2 space-y-1">
+                                        <li>• CIBIL Score (300-900)</li>
+                                        <li>• Monthly Income & Revenue</li>
+                                        <li>• Existing EMIs & Liabilities</li>
+                                        <li>• Property Valuation</li>
+                                        <li>• Business Vintage</li>
+                                        <li>• Industry Risk Profile</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4 class="font-semibold mb-3">ROI Calculator</h4>
+                        <div class="bg-green-50 p-4 rounded-lg">
+                            <div class="space-y-3">
+                                <div class="algorithm-step">
+                                    <strong>Investment Analysis:</strong><br>
+                                    <code>roi = ((rental_income * 12) - (loan_emi * 12) - operating_costs) / initial_investment * 100</code>
+                                </div>
+                                <div class="text-sm text-green-800">
+                                    <strong>Factors Considered:</strong>
+                                    <ul class="mt-2 space-y-1">
+                                        <li>• Monthly Rental Income</li>
+                                        <li>• Loan EMI & Interest</li>
+                                        <li>• Property Taxes</li>
+                                        <li>• Maintenance Costs</li>
+                                        <li>• Insurance Premiums</li>
+                                        <li>• Appreciation Potential</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Insurance Integration -->
+            <div class="mb-8">
+                <h3 class="text-2xl font-semibold mb-4">Comprehensive Insurance Solutions</h3>
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div class="border rounded-lg p-4">
+                        <h4 class="font-semibold mb-3 text-blue-800">Property Insurance</h4>
+                        <div class="space-y-2 text-sm">
+                            <div class="bg-blue-50 p-2 rounded">Fire & Natural Disasters</div>
+                            <div class="bg-blue-50 p-2 rounded">Theft & Burglary</div>
+                            <div class="bg-blue-50 p-2 rounded">Equipment Coverage</div>
+                            <div class="bg-blue-50 p-2 rounded">Loss of Rent</div>
+                            <div class="text-center mt-3">
+                                <span class="text-lg font-bold text-blue-800">₹5,000-50,000/year</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="border rounded-lg p-4">
+                        <h4 class="font-semibold mb-3 text-green-800">Liability Insurance</h4>
+                        <div class="space-y-2 text-sm">
+                            <div class="bg-green-50 p-2 rounded">Public Liability</div>
+                            <div class="bg-green-50 p-2 rounded">Professional Indemnity</div>
+                            <div class="bg-green-50 p-2 rounded">Product Liability</div>
+                            <div class="bg-green-50 p-2 rounded">Cyber Liability</div>
+                            <div class="text-center mt-3">
+                                <span class="text-lg font-bold text-green-800">₹10,000-1,00,000/year</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="border rounded-lg p-4">
+                        <h4 class="font-semibold mb-3 text-purple-800">Business Insurance</h4>
+                        <div class="space-y-2 text-sm">
+                            <div class="bg-purple-50 p-2 rounded">Key Person Insurance</div>
+                            <div class="bg-purple-50 p-2 rounded">Business Interruption</div>
+                            <div class="bg-purple-50 p-2 rounded">Employee Benefits</div>
+                            <div class="bg-purple-50 p-2 rounded">Directors & Officers</div>
+                            <div class="text-center mt-3">
+                                <span class="text-lg font-bold text-purple-800">₹25,000-5,00,000/year</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 14. 90-Day Prototype Roadmap -->
+        <section id="prototype-roadmap" class="bg-white rounded-lg shadow-lg p-6 mb-8">
+            <h2 class="text-3xl font-bold mb-6 text-gray-800"><i class="fas fa-calendar-alt mr-3 text-blue-600"></i>14. 90-Day Prototype Development Roadmap</h2>
+            
+            <!-- Sprint Overview -->
+            <div class="mb-8">
+                <h3 class="text-2xl font-semibold mb-4">Sprint Overview & Timeline</h3>
+                <div class="grid grid-cols-1 lg:grid-cols-4 gap-4">
+                    <div class="text-center p-4 bg-blue-50 rounded-lg border-2 border-blue-200">
+                        <i class="fas fa-rocket text-blue-600 text-3xl mb-3"></i>
+                        <h4 class="font-semibold text-blue-800">Sprint 1-3</h4>
+                        <p class="text-sm text-blue-700">Foundation & Core Features</p>
+                        <div class="text-xs text-blue-600 mt-2">Weeks 1-9</div>
+                    </div>
+                    <div class="text-center p-4 bg-green-50 rounded-lg border-2 border-green-200">
+                        <i class="fas fa-cogs text-green-600 text-3xl mb-3"></i>
+                        <h4 class="font-semibold text-green-800">Sprint 4-6</h4>
+                        <p class="text-sm text-green-700">AI & Advanced Features</p>
+                        <div class="text-xs text-green-600 mt-2">Weeks 10-18</div>
+                    </div>
+                    <div class="text-center p-4 bg-purple-50 rounded-lg border-2 border-purple-200">
+                        <i class="fas fa-users text-purple-600 text-3xl mb-3"></i>
+                        <h4 class="font-semibold text-purple-800">Sprint 7-9</h4>
+                        <p class="text-sm text-purple-700">Integration & Testing</p>
+                        <div class="text-xs text-purple-600 mt-2">Weeks 19-27</div>
+                    </div>
+                    <div class="text-center p-4 bg-orange-50 rounded-lg border-2 border-orange-200">
+                        <i class="fas fa-star text-orange-600 text-3xl mb-3"></i>
+                        <h4 class="font-semibold text-orange-800">Sprint 10-12</h4>
+                        <p class="text-sm text-orange-700">Launch Preparation</p>
+                        <div class="text-xs text-orange-600 mt-2">Weeks 28-36</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Detailed Sprint Planning -->
+            <div class="mb-8">
+                <h3 class="text-2xl font-semibold mb-4">Detailed Sprint Breakdown</h3>
+                <div class="sprint-timeline">
+                    
+                    <!-- Sprint 1 -->
+                    <div class="sprint-item">
+                        <h4 class="font-bold text-lg text-blue-800 mb-2">Sprint 1: Foundation (Weeks 1-3)</h4>
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                            <div>
+                                <h5 class="font-semibold mb-2">Core Infrastructure</h5>
+                                <ul class="text-sm space-y-1">
+                                    <li>• Database schema design & setup</li>
+                                    <li>• API gateway architecture</li>
+                                    <li>• Authentication system (Auth0)</li>
+                                    <li>• Basic frontend shell (Next.js)</li>
+                                    <li>• CI/CD pipeline setup</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h5 class="font-semibold mb-2">Deliverables</h5>
+                                <ul class="text-sm space-y-1">
+                                    <li>• Working development environment</li>
+                                    <li>• User registration & login</li>
+                                    <li>• Basic property listing interface</li>
+                                    <li>• Agent onboarding flow</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sprint 2 -->
+                    <div class="sprint-item">
+                        <h4 class="font-bold text-lg text-green-800 mb-2">Sprint 2: Property Discovery (Weeks 4-6)</h4>
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                            <div>
+                                <h5 class="font-semibold mb-2">Search & Discovery</h5>
+                                <ul class="text-sm space-y-1">
+                                    <li>• Multi-parameter search engine</li>
+                                    <li>• Property listing cards</li>
+                                    <li>• Filter system (location, price, size)</li>
+                                    <li>• Map integration (Google Maps)</li>
+                                    <li>• Image gallery & carousel</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h5 class="font-semibold mb-2">Target: 10,000+ Properties</h5>
+                                <ul class="text-sm space-y-1">
+                                    <li>•
